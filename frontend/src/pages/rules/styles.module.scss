@@ -1,0 +1,26 @@
+.rulesContainer {
+    height: 100vh; // flex: 1
+    background-image: url("../../images/bg/rules.png");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.rulesContent {
+    height: 100%;
+
+    display: flex;
+    gap: 65px;
+    justify-content: space-between;
+    padding: 30px 80px 20px;
+}
+
+.rulesTable {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+
+    border: 1px solid var(--blue-color);
+    box-shadow: var(--purple-shadow-1px);
+}
