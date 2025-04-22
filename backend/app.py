@@ -113,51 +113,9 @@ def get_characters(nickname):
     return jsonify(sorted_result)
 
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-
-        # Проверяем наличие пользователя в базе данных
-        user = check_user_in_db(username, password)
-
-        if user and password not in used_passwords:
-            used_passwords.append(password)
-            session["status"] = "player"
-            session["username"] = username
-            return redirect(url_for("page5"))
-
-        elif username == 'admin' and password == 'admin_password':  # Простая проверка для admin
-            session["status"] = "admin"
-            return redirect(url_for("index"))
-        else:
-            return redirect(url_for("index"))
-
-    return render_template("about.html")
 
 
-@app.route("/regist", methods=["GET", "POST"])
-def page2():
-    if request.method == "POST":
-        display_name = request.form["username"]
-        password = request.form["password"]
 
-        # Ищем пользователя по визуальному имени
-        user = users_collection.find_one({"display_name": display_name})
-
-        if user and user["password"] == hash_password(password):
-            # Сохраняем старое имя в сессии
-            session["username"] = user["username"]
-            # Сохраняем статус (если его нет — по умолчанию "player")
-            session["status"] = user.get("status", "player")
-            # Сохраняем визуальное имя в сессии
-            session["display_name"] = display_name
-            return redirect(url_for("save_data"))
-        else:
-            return render_template("regist.html", message="Неверный ник или пароль")
-
-    return render_template("regist.html")
 
 
 @app.route("/change_display_name", methods=["POST"])
@@ -185,84 +143,32 @@ def change_display_name():
         return jsonify({"success": False, "message": "Пользователь не найден"}), 404
 
 
-@app.route("/pravil")
-def page3():
-    return render_template("Pravil.html")
 
 
-@app.route("/tablo")
-def page4():
-    return render_template("tablo.html")
+
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+
+    if not username or not password:
+        return jsonify({"status": "error", "message": "Поля не заполнены"}), 400
+
+    user = db.users.find_one({"username": username})
+
+    if not user or user.get("password") != password:
+        return jsonify({"status": "error", "message": "Неверный логин или пароль"}), 404
+
+    # Успешный вход
+    session["username"] = username
+    session["status"] = user.get("status", "player")
+
+    return jsonify({"status": "success", "message": "Вход выполнен"}), 200
 
 
-@app.route("/regis_zap", methods=["GET", "POST"])
-def page5():
-    if session.get("status") in ["player", "admin"]:
-        return render_template("regis_zapolnenie.html")
-    return redirect(url_for("index"))
 
 
-@app.route("/save", methods=["GET", "POST"])
-def save_data():
-    if "username" not in session or session.get("status") not in ["player", "admin"]:
-        return redirect(url_for("index"))
-
-    username = session["username"]
-    user_data_collection = db[f"user_data_{username}"]
-
-    if request.method == "POST":
-        data = request.json
-        if not data:
-            return jsonify({"status": "error", "message": "Нет данных"}), 400
-
-        for item in data:
-            # Преобразуем URL картинки в относительный путь
-            image_url = item.get("url")
-            if image_url:
-                corrected_url = image_url.replace("http://127.0.0.1:5000", "")
-                item["url"] = corrected_url
-
-            existing_entry = user_data_collection.find_one(
-                {"url": item["url"]})
-
-            if existing_entry:
-                # Если запись уже существует, обновляем цифры
-                if existing_entry["value1"] != item["value1"] or existing_entry["value2"] != item["value2"]:
-                    user_data_collection.update_one(
-                        {"url": item["url"]},
-                        {"$set": {"value1": item["value1"],
-                                  "value2": item["value2"]}}
-                    )
-            else:
-                # Если записи нет, вставляем новую
-                user_data_collection.insert_one(item)
-
-        return jsonify({"status": "success", "message": "Данные обновлены"}), 200
-
-    return render_template("regis_zapolnenie.html")
-
-
-# Страница для выбора пользователя и выгрузки данных
-@app.route("/view", methods=["GET", "POST"])
-def view():
-    if "username" not in session:
-        return redirect(url_for("index"))
-
-    username = session["username"]
-
-    # Получаем список пользователей
-    users_list = users_collection.find({}, {"_id": 0, "username": 1})
-    users = [user["username"] for user in users_list]
-
-    if request.method == "POST":
-        selected_user = request.form.get("selected_user")
-        if selected_user:
-            user_data_collection = db[f"user_data_{selected_user}"]
-            data = list(user_data_collection.find(
-                {}, {"_id": 0}))  # Убираем _id
-            return render_template("view.html", users=users, data=data, selected_user=selected_user)
-
-    return render_template("view.html", users=users, data=None, selected_user=None)
 
 
 # API для получения списка картинок
@@ -364,18 +270,7 @@ def before_request():
         session['session_id'] = str(uuid.uuid4())
 
 
-@app.route("/bans")
-def page6():
-    if session.get("status") in ["player", "admin"]:
-        return render_template("bans.html", session_id=session['session_id'])
-    return redirect(url_for("index"))
 
-
-@app.route("/galograms")
-def galograms():
-    if session.get("status") in ["player", "admin"]:
-        return render_template("galograms.html", session_id=session['session_id'])
-    return redirect(url_for("index"))
 
 
 @app.route('/set_players', methods=['POST'])
