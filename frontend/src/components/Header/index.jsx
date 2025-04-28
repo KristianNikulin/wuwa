@@ -1,29 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
-import { PROJECT_NAME } from "../../constants/text";
+import { useUser } from "../../state-providers/UserContext";
 
 import styles from "./styles.module.scss";
 
 const Header = () => {
     const navigate = useNavigate();
 
-    // запрос на проверку логина -> доступ в профиль
-
-    const isLogged = false;
-
-    const nickname = "kr1sn1k";
+    const { user, isLoading, updateUser, checkAuth } = useUser();
 
     return (
         <header className={styles.appHeader}>
             <div className={styles.wrapper}>
-                <h1 className={styles.name}>{PROJECT_NAME}</h1>
+                <h1 className={styles.name}>
+                    Wuthering <br /> Waves
+                </h1>
                 <div className={styles.links}>
                     <button onClick={() => navigate("/about")}>ABOUT</button>
                     <button onClick={() => navigate("/rules")}>RULES</button>
                     <button onClick={() => navigate("/bracket")}>TOURNAMENT BRACKET</button>
-                    {!isLogged && <button onClick={() => navigate("/participate")}>PARTICIPATE</button>}
-                    {!isLogged && <button onClick={() => navigate(`/player/${nickname}`)}>{nickname}</button>}
+                    {!isLoading && !user && <button onClick={() => navigate("/participate")}>PARTICIPATE</button>}
+                    {!isLoading && user && (
+                        <button onClick={() => navigate(`/player/${user.username}`)}>{user.display_name}</button>
+                    )}
                 </div>
                 <div className={styles.infoContainer}>
                     @zymer44

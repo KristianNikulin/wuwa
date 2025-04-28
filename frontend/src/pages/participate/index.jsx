@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../api";
 
 import Header from "../../components/Header";
 import Button from "../../components/Button";
@@ -10,15 +11,27 @@ import Input from "../../components/Input";
 import styles from "./styles.module.scss";
 
 const Participate = () => {
+    const [isLoginError, setIsLoginError] = useState(false);
     const navigate = useNavigate();
 
     const methods = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        try {
+            const response = await api.post("/login", {
+                username: data.login,
+                password: data.password,
+            });
 
-        navigate(`/player/${data.login}`);
-        // запрос на авторизацию -> переход на страницу игрока
+            const name = response?.data?.user?.display_name || "";
+
+            navigate(`/player/${name}`);
+            setIsLoginError(false);
+        } catch (error) {
+            if (error?.response?.status == 401) {
+                setIsLoginError(true);
+            }
+        }
     };
 
     return (
@@ -36,6 +49,7 @@ const Participate = () => {
                 <div>
                     {/* можно вынести в отдельный компонент */}
                     <FormProvider {...methods}>
+                        {isLoginError && <div className={styles.errorLoginBlock}>Неверный ник или пароль</div>}
                         <form className={styles.participateLoginForm} onSubmit={methods.handleSubmit(onSubmit)}>
                             <Input id="login" placeholder="username" />
                             <Input id="password" type="password" placeholder="password" />

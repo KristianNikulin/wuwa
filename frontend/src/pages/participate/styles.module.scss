@@ -49,3 +49,23 @@
     border: 1px solid var(--blue-color);
     box-shadow: var(--purple-shadow-1px);
 }
+
+.errorLoginBlock {
+    width: 350px;
+    height: 40px;
+    border-radius: 15px;
+
+    padding: 0px 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--blue-color);
+    box-shadow: var(--purple-shadow-1px);
+
+    color: red;
+}
