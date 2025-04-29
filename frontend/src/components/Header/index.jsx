@@ -1,13 +1,48 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../state-providers/UserContext";
+
+import { FiLogOut } from "react-icons/fi";
+import { FaTelegram } from "react-icons/fa";
+
+import { api } from "../../api";
+
+import { Trans } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react";
 
 import styles from "./styles.module.scss";
 
 const Header = () => {
-    const navigate = useNavigate();
+    const { i18n } = useLingui();
+    const [language, setLanguage] = useState(localStorage.getItem("language") || "en");
 
-    const { user, isLoading, updateUser, checkAuth } = useUser();
+    useEffect(() => {
+        localStorage.setItem("language", language);
+        i18n.activate(language);
+    }, [i18n, language]);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const activePath = location.pathname;
+    console.log(`activePath: `, activePath);
+
+    const isActive = (path) => {
+        if (path === "/") return activePath === path;
+        return activePath.startsWith(path);
+    };
+
+    const { user, isLoading, checkAuth } = useUser();
+
+    const handleLogout = async () => {
+        try {
+            const response = await api.post("/logout", {});
+            console.log(`response: `, response);
+            checkAuth();
+        } catch (error) {
+            console.log(`error: `, error);
+        }
+    };
 
     return (
         <header className={styles.appHeader}>
@@ -16,17 +51,55 @@ const Header = () => {
                     Wuthering <br /> Waves
                 </h1>
                 <div className={styles.links}>
-                    <button onClick={() => navigate("/about")}>ABOUT</button>
-                    <button onClick={() => navigate("/rules")}>RULES</button>
-                    <button onClick={() => navigate("/bracket")}>TOURNAMENT BRACKET</button>
-                    {!isLoading && !user && <button onClick={() => navigate("/participate")}>PARTICIPATE</button>}
-                    {!isLoading && user && (
-                        <button onClick={() => navigate(`/player/${user.username}`)}>{user.display_name}</button>
-                    )}
+                    <button onClick={() => navigate("/about")} className={isActive("/about") ? styles.active : ""}>
+                        <Trans>ABOUT</Trans>
+                    </button>
+                    <button onClick={() => navigate("/rules")} className={isActive("/rules") ? styles.active : ""}>
+                        <Trans>RULES</Trans>
+                    </button>
+                    <button onClick={() => navigate("/bracket")} className={isActive("/bracket") ? styles.active : ""}>
+                        <Trans>TOURNAMENT BRACKET</Trans>
+                    </button>
+                    {!isLoading &&
+                        (!user ? (
+                            <button
+                                onClick={() => navigate("/participate")}
+                                className={isActive("/participate") ? styles.active : ""}
+                            >
+                                <Trans>PARTICIPATE</Trans>
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => navigate(`/player/${user.username}`)}
+                                className={isActive(`/player/${user.username}`) ? styles.active : ""}
+                            >
+                                {user.display_name}
+                            </button>
+                        ))}
                 </div>
                 <div className={styles.infoContainer}>
+                    {user && (
+                        <button
+                            onClick={handleLogout}
+                            className={styles.logoutButton}
+                            style={{ display: "flex", justifyContent: "center" }}
+                            title="Logout"
+                        >
+                            <FiLogOut className={styles.logoutIcon} />
+                        </button>
+                    )}
+                    <div className={styles.languageSwitcher}>
+                        <button onClick={() => setLanguage("en")} className={styles.langButton}>
+                            EN
+                        </button>
+                        <button onClick={() => setLanguage("ru")} className={styles.langButton}>
+                            RU
+                        </button>
+                    </div>
                     @zymer44
-                    <img src="../../images/tg.png" alt="" />
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        <FaTelegram className={styles.icon} />
+                    </div>
                 </div>
             </div>
         </header>

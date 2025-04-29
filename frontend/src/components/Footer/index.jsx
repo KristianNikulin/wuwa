@@ -1,11 +1,14 @@
 import React from "react";
 
+import { useLingui } from "@lingui/react/macro";
+
 import styles from "./styles.module.scss";
 
-// призовые места
-const items = [{ name: "призовой фонд", price: 150 }];
-
 const Footer = () => {
+    const { t } = useLingui();
+
+    const items = [{ name: t`prize money`, price: 150 }];
+
     return (
         <footer className={styles.footerContainer}>
             <div className={styles.items}>

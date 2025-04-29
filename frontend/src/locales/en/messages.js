@@ -1,0 +1,1 @@
+/*eslint-disable*/module.exports={messages:JSON.parse("{\"m0ubhH\":[\"ABOUT\"],\"DRCADA\":[\"PARTICIPATE\"],\"dKFZJw\":[\"prize money\"],\"/7lyTX\":[\"RULES\"],\"PGzvs+\":[\"TOURNAMENT BRACKET\"],\"Gg4t9h\":[\"ПРАВИЛА\"]}")};

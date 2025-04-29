@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../state-providers/UserContext";
 import { api } from "../../api";
 
 import Header from "../../components/Header";
@@ -14,6 +15,8 @@ const Participate = () => {
     const [isLoginError, setIsLoginError] = useState(false);
     const navigate = useNavigate();
 
+    const { checkAuth } = useUser();
+
     const methods = useForm();
 
     const onSubmit = async (data) => {
@@ -23,10 +26,11 @@ const Participate = () => {
                 password: data.password,
             });
 
-            const name = response?.data?.user?.display_name || "";
+            const name = response?.data?.user?.username || "";
 
             navigate(`/player/${name}`);
             setIsLoginError(false);
+            checkAuth();
         } catch (error) {
             if (error?.response?.status == 401) {
                 setIsLoginError(true);

@@ -1,0 +1,1 @@
+/*eslint-disable*/module.exports={messages:JSON.parse("{\"m0ubhH\":[\"О ТУРНИРЕ\"],\"DRCADA\":[\"УЧАСТВОВАТЬ\"],\"dKFZJw\":[\"призовой фонд\"],\"/7lyTX\":[\"ПРАВИЛА\"],\"PGzvs+\":[\"ТУРНИРНАЯ СЕТКА\"],\"Gg4t9h\":[\"ПРАВИЛА\"]}")};
