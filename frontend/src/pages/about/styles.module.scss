@@ -23,7 +23,7 @@
 .title {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
     font-size: 147px; // 162px
     -webkit-text-stroke: 2px black;
     text-shadow: var(--purple-shadow-2px);
@@ -32,7 +32,8 @@
 
 .subtitle {
     display: flex;
-    gap: 30px;
+    align-items: center;
+    gap: 10px;
 }
 
 .firstName {

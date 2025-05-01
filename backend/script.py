@@ -1,5 +1,7 @@
 import os
 import bcrypt
+import json
+from pathlib import Path
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError, OperationFailure
 from urllib.parse import quote_plus
@@ -72,6 +74,22 @@ class MongoDBManager:
             ],
             "weapons": [
                 ("name", {})
+            ],
+            "user_characters": [
+                ("user_id", {}),
+                ("character_id", {}),
+                ([("user_id", 1), ("character_id", 1)], {
+                 "unique": True})  # Составной уникальный индекс
+            ],
+            "user_weapons": [
+                ("user_id", {}),
+                ("weapon_id", {}),
+                # Составной уникальный индекс
+                ([("user_id", 1), ("weapon_id", 1)], {"unique": True})
+            ],
+            "user_screenshots": [
+                ("user_id", {}),
+                ("filename", {"unique": True})
             ]
         }
 
@@ -84,51 +102,81 @@ class MongoDBManager:
 
                 # Создаем индексы
                 col = self.db[col_name]
-                for field, options in indexes:
-                    col.create_index([(field, 1)], **options)
-                    logger.info(f"Created index on {field} for {col_name}")
+                for index_def in indexes:
+                    if isinstance(index_def, tuple):
+                        if isinstance(index_def[0], list):
+                            # Составной индекс
+                            fields, options = index_def
+                            col.create_index(fields, **options)
+                            logger.info(
+                                f"Created compound index on {fields} for {col_name}")
+                        else:
+                            # Обычный индекс
+                            field, options = index_def
+                            col.create_index([(field, 1)], **options)
+                            logger.info(
+                                f"Created index on {field} for {col_name}")
 
             except OperationFailure as e:
                 if "already exists" not in str(e):
                     logger.warning(
                         f"Could not create collection/index for {col_name}: {e}")
 
-    def create_initial_users(self):
+    def load_data_from_file(self, filename):
+        """Загружает данные из JSON файла"""
+        try:
+            file_path = Path(__file__).parent / filename
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            logger.error(f"Error loading {filename}: {e}")
+            return None
+
+    def initialize_collection_data(self, collection_name, filename, key_field='name', transform_func=None):
+        """
+        Инициализирует данные в коллекции из файла
+        :param collection_name: Имя коллекции
+        :param filename: Имя файла с данными
+        :param key_field: Поле для проверки уникальности
+        :param transform_func: Функция для преобразования данных перед вставкой
+        """
         if not self.connected:
             self.get_database()
 
-        users_collection = self.db.users
-
         try:
-            if users_collection.count_documents({}) > 0:
-                logger.info("Users collection already has data")
+            data = self.load_data_from_file(filename)
+            if not data:
+                logger.warning(f"No data found in {filename}")
                 return False
 
-            users_data = [
-                {
-                    "username": "user1",
-                    "password": hash_password("1"),
-                    "display_name": "Player 1",
-                    "status": "player"
-                },
-                {
-                    "username": "admin",
-                    "password": hash_password("admin123"),
-                    "display_name": "Administrator",
-                    "status": "admin"
-                }
-            ]
+            collection = self.db[collection_name]
+            inserted_count = 0
 
-            result = users_collection.insert_many(users_data)
-            logger.info(f"Inserted {len(result.inserted_ids)} default users")
+            for item in data:
+                # Применяем преобразование если нужно
+                if transform_func:
+                    item = transform_func(item)
+
+                # Проверяем существует ли запись
+                if collection.count_documents({key_field: item[key_field]}) == 0:
+                    collection.insert_one(item)
+                    inserted_count += 1
+
+            logger.info(
+                f"Inserted {inserted_count} items into {collection_name} from {filename}")
             return True
+
         except PyMongoError as e:
-            logger.error(f"Failed to insert users: {e}")
+            logger.error(f"Failed to initialize {collection_name}: {e}")
             return False
 
 
-def hash_password(password):
-    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+def hash_password(item):
+    """Преобразует пароль в хеш для пользователей"""
+    if 'password' in item:
+        item['password'] = bcrypt.hashpw(
+            item['password'].encode(), bcrypt.gensalt()).decode()
+    return item
 
 
 def main():
@@ -142,7 +190,17 @@ def main():
             raise RuntimeError("Failed to connect to MongoDB")
 
         mongo_manager.initialize_collections()
-        mongo_manager.create_initial_users()
+
+        # Инициализация данных
+        mongo_manager.initialize_collection_data(
+            'users', 'users.json', 'username', hash_password
+        )
+        mongo_manager.initialize_collection_data(
+            'weapons', 'weapons.json'
+        )
+        mongo_manager.initialize_collection_data(
+            'characters', 'characters.json'
+        )
 
         logger.info("Database initialization completed successfully")
         return 0

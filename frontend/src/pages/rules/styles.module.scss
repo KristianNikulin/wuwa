@@ -20,6 +20,7 @@
 .rulesTable {
     background-color: rgba(0, 0, 0, 0.7);
     width: 100%;
+    min-width: 200px;
 
     border: 1px solid var(--blue-color);
     box-shadow: var(--purple-shadow-1px);

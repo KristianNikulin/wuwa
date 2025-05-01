@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 import styles from "./styles.module.scss";
 
-const Input = ({
-    id,
-    label = "",
-    type = "text",
-    defaultValue,
-    register,
-    requiredMessage,
-    disabled,
-    placeholder = "",
-}) => {
+const Input = ({ id, label = "", type = "text", defaultValue, value, requiredMessage, disabled, placeholder = "" }) => {
     const {
         register: formRegister,
+        setValue,
         formState: { errors },
     } = useFormContext();
+
+    useEffect(() => {
+        if (value !== undefined) {
+            setValue(id, value);
+        }
+    }, [id, value, setValue]);
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -28,7 +26,10 @@ const Input = ({
                 style={disabled ? { color: "gray" } : {}}
                 type={type}
                 id={id}
-                {...formRegister(id, { required: requiredMessage })}
+                {...formRegister(id, {
+                    required: requiredMessage,
+                    value: value,
+                })}
                 defaultValue={defaultValue}
             />
             {errors[id] && <p style={{ color: "red" }}>{errors[id]?.message}</p>}

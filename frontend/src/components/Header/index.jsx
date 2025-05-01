@@ -25,7 +25,6 @@ const Header = () => {
     const location = useLocation();
 
     const activePath = location.pathname;
-    console.log(`activePath: `, activePath);
 
     const isActive = (path) => {
         if (path === "/") return activePath === path;
@@ -36,8 +35,8 @@ const Header = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await api.post("/logout", {});
-            console.log(`response: `, response);
+            await api.post("/logout", {});
+            navigate("/about");
             checkAuth();
         } catch (error) {
             console.log(`error: `, error);

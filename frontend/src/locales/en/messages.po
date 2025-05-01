@@ -13,11 +13,43 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/Header/index.jsx:55
+#: src/components/Header/index.jsx:54
 msgid "ABOUT"
 msgstr "ABOUT"
 
-#: src/components/Header/index.jsx:69
+#: src/pages/player/index.jsx:118
+msgid "CHARACTERS"
+msgstr "CHARACTERS"
+
+#: src/pages/participate/index.jsx:64
+msgid "Invalid nickname or password"
+msgstr "Invalid nickname or password"
+
+#: src/pages/participate/index.jsx:49
+msgid "Join Us!"
+msgstr "Join Us!"
+
+#: src/pages/player/index.jsx:175
+msgid "Loading"
+msgstr "Loading"
+
+#: src/pages/participate/index.jsx:72
+msgid "log in"
+msgstr "log in"
+
+#: src/pages/player/index.jsx:161
+msgid "nickname"
+msgstr "nickname"
+
+#: src/pages/player/index.jsx:179
+msgid "No screenshots yet"
+msgstr "No screenshots yet"
+
+#: src/pages/participate/index.jsx:54
+msgid "participate"
+msgstr "participate"
+
+#: src/components/Header/index.jsx:68
 msgid "PARTICIPATE"
 msgstr "PARTICIPATE"
 
@@ -26,14 +58,34 @@ msgid "prize money"
 msgstr "prize money"
 
 #: src/pages/rules/index.jsx:19
-#: src/components/Header/index.jsx:58
+#: src/components/Header/index.jsx:57
 msgid "RULES"
 msgstr "RULES"
 
-#: src/components/Header/index.jsx:61
+#: src/pages/player/index.jsx:222
+msgid "save"
+msgstr "save"
+
+#: src/pages/player/index.jsx:167
+msgid "screenshots"
+msgstr "screenshots"
+
+#: src/pages/participate/index.jsx:72
+#~ msgid "send"
+#~ msgstr "send"
+
+#: src/components/Header/index.jsx:60
 msgid "TOURNAMENT BRACKET"
 msgstr "TOURNAMENT BRACKET"
+
+#: src/pages/player/index.jsx:227
+msgid "WEAPONS"
+msgstr "WEAPONS"
 
 #: src/pages/rules/index.jsx:19
 #~ msgid "ПРАВИЛА"
 #~ msgstr "ПРАВИЛА"
+
+#: src/pages/participate/index.jsx:54
+#~ msgid "участвовать"
+#~ msgstr "участвовать"
