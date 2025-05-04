@@ -53,6 +53,8 @@ import Unflickering_Valor from "../images/weapons/Unflickering_Valor.png";
 import Verdant_Summit from "../images/weapons/Verdant_Summit.png";
 import Veritys_Handle from "../images/weapons/Veritys_Handle.png";
 import Whispers_of_Sirens from "../images/weapons/Whispers_of_Sirens.png";
+import Blazing_Justice from "../images/weapons/Blazing_Justice.png";
+import Woodland_Aria from "../images/weapons/Woodland_Aria.png";
 
 // characters
 import Carlotta from "../images/characters/Carlotta.png";
@@ -86,8 +88,9 @@ import Youhu from "../images/characters/Youhu.png";
 import Yuanwu from "../images/characters/Yuanwu.png";
 import Zani from "../images/characters/Zani.png";
 import Zhezhi from "../images/characters/Zhezhi.png";
-
-// Rover ?????????????????
+import Rover_Aero from "../images/characters/Rover_Aero.png";
+import Rover_Havok from "../images/characters/Rover_Havok.png";
+import Rover_Spectro from "../images/characters/Rover_Spectro.png";
 
 export const characterImages = {
     Carlotta,
@@ -121,6 +124,9 @@ export const characterImages = {
     Yuanwu,
     Zani,
     Zhezhi,
+    Rover_Aero,
+    Rover_Havok,
+    Rover_Spectro,
 };
 
 export const weaponImages = {
@@ -178,4 +184,6 @@ export const weaponImages = {
     Verdant_Summit,
     Veritys_Handle,
     Whispers_of_Sirens,
+    Blazing_Justice,
+    Woodland_Aria,
 };

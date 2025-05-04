@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../state-providers/UserContext";
@@ -17,9 +17,15 @@ const Participate = () => {
     const [isLoginError, setIsLoginError] = useState(false);
     const navigate = useNavigate();
 
-    const { checkAuth } = useUser();
+    const { user, checkAuth } = useUser();
 
     const methods = useForm();
+
+    useEffect(() => {
+        if (user?.username) {
+            navigate(`/player/${user.username}`);
+        }
+    }, [user, navigate]);
 
     const onSubmit = async (data) => {
         try {

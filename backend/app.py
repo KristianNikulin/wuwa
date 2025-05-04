@@ -147,6 +147,21 @@ def get_players():
         return jsonify({"status": "error", "message": "Database error"}), 500
 
 
+@app.route("/players/<string:player_name>", methods=["GET"])
+def get_player(player_name):
+    try:
+        player = users_collection.find_one(
+            {"status": "player", "username": player_name},
+            {"display_name": 1, "username": 1, "_id": 0}
+        )
+        if player:
+            return jsonify({"status": "success", "data": player}), 200
+        else:
+            return jsonify({"status": "error", "message": "Player not found"}), 404
+    except PyMongoError:
+        return jsonify({"status": "error", "message": "Database error"}), 500
+
+
 @app.route("/characters", methods=["GET"])
 def get_characters():
     try:
@@ -165,29 +180,23 @@ def get_weapons():
         return jsonify({"status": "error", "message": "Database error"}), 500
 
 
-@app.route("/player/<string:player_name>/weapons", methods=["GET", "POST", "DELETE"])
+@app.route("/player/<string:player_name>/weapons", methods=["GET", "POST", "DELETE", "PATCH"])
 def user_weapons(player_name):
     try:
         # Проверка авторизации
-        if 'username' not in session or session['username'] != player_name:
+        if request.method != "GET" and ('username' not in session or session['username'] != player_name):
             return jsonify({"status": "error", "message": "Unauthorized"}), 401
 
         if request.method == "GET":
             # Получение оружия пользователя с полными данными
             user_weapons = list(db.user_weapons.find(
-                {"user_id": session['username']},
-                {"_id": 0, "user_id": 0}
+                {"user_id": player_name},
+                {"_id": 0, "user_id": 0, "weapon_id": 0}
             ))
 
-            # Получаем полные данные оружия из коллекции weapons
-            weapons_data = []
-            for uw in user_weapons:
-                weapon = db.weapons.find_one(
-                    {"name": uw["weapon_id"]}, {"_id": 0})
-                if weapon:
-                    weapons_data.append(weapon)
+            weapons_list = [item["weapon_data"] for item in user_weapons]
 
-            return jsonify({"status": "success", "data": weapons_data}), 200
+            return jsonify({"status": "success", "data": weapons_list}), 200
 
         elif request.method == "POST":
             # Добавление нового оружия (массивом)
@@ -219,7 +228,7 @@ def user_weapons(player_name):
                 db.user_weapons.insert_one({
                     "user_id": session['username'],
                     "weapon_id": weapon_name,
-                    "weapon_data": weapon  # Сохраняем полные данные оружия
+                    "weapon_data": {'name': weapon_name, 'value1': 0, 'value2': 1}
                 })
                 added_weapons.append(weapon_name)
 
@@ -266,33 +275,80 @@ def user_weapons(player_name):
                 return jsonify(response), 207  # Multi-status
             return jsonify(response), 200
 
+        elif request.method == "PATCH":
+            # Обновление значений оружия
+            data = request.get_json()
+            if not data or not isinstance(data, dict):
+                return jsonify({"status": "error", "message": "Expected object with weapon updates"}), 400
+
+            updated_weapons = []
+            not_found_weapons = []
+
+            for weapon_name, updates in data.items():
+                # Проверяем, что обновления содержат нужные поля
+                if not isinstance(updates, dict) or not all(key in updates for key in ['value1', 'value2']):
+                    return jsonify({
+                        "status": "error",
+                        "message": f"Invalid updates for weapon {weapon_name}. Expected value1 and value2"
+                    }), 400
+
+                # Проверяем, есть ли такое оружие у пользователя
+                existing = db.user_weapons.find_one({
+                    "user_id": session['username'],
+                    "weapon_id": weapon_name
+                })
+
+                if not existing:
+                    not_found_weapons.append(weapon_name)
+                    continue
+
+                # Обновляем данные оружия
+                db.user_weapons.update_one(
+                    {
+                        "user_id": session['username'],
+                        "weapon_id": weapon_name
+                    },
+                    {
+                        "$set": {
+                            "weapon_data.value1": updates['value1'],
+                            "weapon_data.value2": updates['value2']
+                        }
+                    }
+                )
+                updated_weapons.append(weapon_name)
+
+            response = {
+                "status": "success",
+                "message": "Weapons updated",
+            }
+
+            if not updated_weapons and not_found_weapons:
+                return jsonify(response), 404
+            elif not_found_weapons:
+                return jsonify(response), 207  # Multi-status
+            return jsonify(response), 200
+
     except PyMongoError as e:
         return jsonify({"status": "error", "message": "Database error"}), 500
 
 
-@app.route("/player/<string:player_name>/characters", methods=["GET", "POST", "DELETE"])
+@app.route("/player/<string:player_name>/characters", methods=["GET", "POST", "DELETE", "PATCH"])
 def user_characters(player_name):
     try:
         # Проверка авторизации
-        if 'username' not in session or session['username'] != player_name:
+        if request.method != "GET" and ('username' not in session or session['username'] != player_name):
             return jsonify({"status": "error", "message": "Unauthorized"}), 401
 
         if request.method == "GET":
             # Получение персонажей пользователя с полными данными
             user_chars = list(db.user_characters.find(
-                {"user_id": session['username']},
-                {"_id": 0, "user_id": 0}
+                {"user_id": player_name},
+                {"_id": 0, "user_id": 0, "weapon_id": 0}
             ))
 
-            # Получаем полные данные персонажей из коллекции characters
-            chars_data = []
-            for uc in user_chars:
-                character = db.characters.find_one(
-                    {"name": uc["character_id"]}, {"_id": 0})
-                if character:
-                    chars_data.append(character)
+            chars_list = [item["character_data"] for item in user_chars]
 
-            return jsonify({"status": "success", "data": chars_data}), 200
+            return jsonify({"status": "success", "data": chars_list}), 200
 
         elif request.method == "POST":
             # Добавление новых персонажей (массивом)
@@ -325,7 +381,7 @@ def user_characters(player_name):
                 db.user_characters.insert_one({
                     "user_id": session['username'],
                     "character_id": char_name,
-                    "character_data": character  # Сохраняем полные данные персонажа
+                    "character_data": {'name': char_name, 'value1': 0, 'value2': 0}
                 })
                 added_chars.append(char_name)
 
@@ -372,6 +428,58 @@ def user_characters(player_name):
                 return jsonify(response), 207  # Multi-status
             return jsonify(response), 200
 
+        elif request.method == "PATCH":
+            data = request.get_json()
+            if not data or not isinstance(data, dict):
+                return jsonify({"status": "error", "message": "Expected object with character updates"}), 400
+
+            updated_chars = []
+            not_found_chars = []
+
+            for char_name, updates in data.items():
+                # Проверяем, что обновления содержат нужные поля
+                if not isinstance(updates, dict) or not all(key in updates for key in ['value1', 'value2']):
+                    return jsonify({
+                        "status": "error",
+                        "message": f"Invalid updates for character {char_name}. Expected value1 and value2"
+                    }), 400
+
+                # Проверяем, есть ли такой персонаж у пользователя
+                existing = db.user_characters.find_one({
+                    "user_id": session['username'],
+                    "character_id": char_name
+                })
+
+                if not existing:
+                    not_found_chars.append(char_name)
+                    continue
+
+                # Обновляем данные персонажа
+                db.user_characters.update_one(
+                    {
+                        "user_id": session['username'],
+                        "character_id": char_name
+                    },
+                    {
+                        "$set": {
+                            "character_data.value1": updates['value1'],
+                            "character_data.value2": updates['value2']
+                        }
+                    }
+                )
+                updated_chars.append(char_name)
+
+            response = {
+                "status": "success",
+                "message": "Characters updated",
+            }
+
+            if not updated_chars and not_found_chars:
+                return jsonify(response), 404
+            elif not_found_chars:
+                return jsonify(response), 207  # Multi-status
+            return jsonify(response), 200
+
     except PyMongoError as e:
         return jsonify({"status": "error", "message": "Database error"}), 500
 
@@ -380,7 +488,7 @@ def user_characters(player_name):
 def user_screenshots(player_name):
     try:
         # Проверка авторизации
-        if 'username' not in session or session['username'] != player_name:
+        if request.method != "GET" and ('username' not in session or session['username'] != player_name):
             return jsonify({"status": "error", "message": "Unauthorized"}), 401
 
         if request.method == "GET":
@@ -486,26 +594,35 @@ def user_screenshots(player_name):
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
-@app.route("/screenshots/<string:screenshot_id>", methods=["GET"])
-def get_screenshot(screenshot_id):
+@app.route("/screenshots/<string:screenshot_id>", methods=["GET", "DELETE"])
+def get_or_delete_screenshot(screenshot_id):
     try:
-        # Поиск скриншота
-        screenshot = db.user_screenshots.find_one(
-            {"_id": ObjectId(screenshot_id)},
-            {"image_data": 1, "content_type": 1}
-        )
+        if request.method == "GET":
+            # Поиск скриншота
+            screenshot = db.user_screenshots.find_one(
+                {"_id": ObjectId(screenshot_id)},
+                {"image_data": 1, "content_type": 1}
+            )
 
-        if not screenshot:
-            return jsonify({"status": "error", "message": "Screenshot not found"}), 404
+            if not screenshot:
+                return jsonify({"status": "error", "message": "Screenshot not found"}), 404
 
-        # Отправка бинарных данных
-        from flask import Response
-        return Response(
-            screenshot['image_data'],
-            content_type=screenshot['content_type']
-        )
+            # Отправка бинарных данных
+            return Response(
+                screenshot['image_data'],
+                content_type=screenshot['content_type']
+            )
 
-    except PyMongoError as e:
+        elif request.method == "DELETE":
+            result = db.user_screenshots.delete_one(
+                {"_id": ObjectId(screenshot_id)})
+
+            if result.deleted_count == 0:
+                return jsonify({"status": "error", "message": "Screenshot not found"}), 404
+
+            return jsonify({"status": "success", "message": "Screenshot deleted"}), 200
+
+    except PyMongoError:
         return jsonify({"status": "error", "message": "Database error"}), 500
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500

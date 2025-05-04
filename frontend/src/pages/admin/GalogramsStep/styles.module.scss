@@ -1,0 +1,82 @@
+.galogramsContent {
+    height: 100%;
+
+    display: flex;
+    justify-content: space-between;
+
+    padding: 20px 20px 40px 100px;
+    gap: 15px;
+    position: relative;
+}
+
+.videoContent {
+    height: 100%;
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.element {
+    position: absolute;
+    left: 0;
+    transform: skewX(10deg);
+
+    width: 50px;
+    height: 50px;
+}
+
+.videoContainer {
+    position: relative;
+    height: 100%;
+    width: 150px;
+    flex-shrink: 0;
+    transform: skewX(-10deg);
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid white;
+    box-shadow: var(--purple-shadow-2px);
+    transition: all 0.3s ease;
+
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.5);
+        transition: filter 0.3s ease;
+    }
+
+    &.choosedSelected {
+        height: calc(100% + 20px);
+        width: 170px;
+
+        video {
+            filter: brightness(1.2);
+        }
+    }
+
+    &.bannedSelected {
+        height: calc(100% - 10px);
+        width: 140px;
+
+        video {
+            filter: brightness(1) brightness(0.2) sepia(1) hue-rotate(-50deg) opacity(1);
+        }
+    }
+}
+
+.actionButton {
+    position: relative;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid white;
+    color: white;
+    padding: 8px 16px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+}

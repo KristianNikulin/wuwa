@@ -6,8 +6,14 @@
         "status": "player"
     },
     {
+        "username": "user2",
+        "password": "1",
+        "display_name": "Player 2",
+        "status": "player"
+    },
+    {
         "username": "admin",
-        "password": "admin123",
+        "password": "1",
         "display_name": "Administrator",
         "status": "admin"
     }

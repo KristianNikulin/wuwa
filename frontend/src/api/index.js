@@ -16,15 +16,29 @@ export async function checkSession() {
         const data = response.data;
 
         if (data.is_logged_in) {
-            console.log("User is logged in:", data.user);
             return data.user;
         } else {
-            console.log("User is not logged in");
             return null;
         }
     } catch (error) {
         console.error("Session check failed:", error);
         return null;
+    }
+}
+
+export async function getPlayer(playerName) {
+    try {
+        const response = await api.get(`/players/${playerName}`);
+        return {
+            success: true,
+            data: response.data.data,
+        };
+    } catch (error) {
+        console.error("Get player error:", error.response?.data || error.message);
+        return {
+            success: false,
+            error: error.response?.data?.message || `Failed to load player ${playerName}`,
+        };
     }
 }
 
@@ -92,6 +106,24 @@ export async function deletePlayerCharacters(playerName, characters) {
         return {
             success: false,
             error: error.response?.data?.message || `Failed to delete characters to ${playerName}`,
+        };
+    }
+}
+
+export async function updatePlayerCharacters(playerName, updates) {
+    try {
+        const response = await api.patch(`/player/${playerName}/characters`, updates);
+
+        return {
+            success: true,
+            data: response.data,
+        };
+    } catch (error) {
+        console.error("Update player characters error:", error.response?.data || error.message);
+
+        return {
+            success: false,
+            error: error.response?.data?.message || `Failed to update characters for ${playerName}`,
         };
     }
 }
@@ -164,6 +196,24 @@ export async function deletePlayerWeapons(playerName, weapons) {
     }
 }
 
+export async function updatePlayerWeapons(playerName, updates) {
+    try {
+        const response = await api.patch(`/player/${playerName}/weapons`, updates);
+
+        return {
+            success: true,
+            data: response.data,
+        };
+    } catch (error) {
+        console.error("Update player weapons error:", error.response?.data || error.message);
+
+        return {
+            success: false,
+            error: error.response?.data?.message || `Failed to update weapons for ${playerName}`,
+        };
+    }
+}
+
 export async function getPlayerScreenshots(playerName) {
     try {
         const response = await api.get(`/player/${playerName}/screenshots`);
@@ -176,6 +226,23 @@ export async function getPlayerScreenshots(playerName) {
         return {
             success: false,
             error: error.response?.data?.message || `Failed to load ${playerName}'s screenshots`,
+        };
+    }
+}
+
+export async function deletePlayerScreenshotById(screenshotId) {
+    try {
+        const response = await api.delete(`/screenshots/${screenshotId}`);
+
+        return {
+            success: true,
+            message: response.data.message,
+        };
+    } catch (error) {
+        console.error("Delete player screenshot error:", error.response?.data || error.message);
+        return {
+            success: false,
+            error: error.response?.data?.message || "Failed to delete player screenshot",
         };
     }
 }

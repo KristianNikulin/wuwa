@@ -1,157 +1,172 @@
 [
     {
         "name": "Carlotta",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Aalto",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Baizhi",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Brant",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Calcharo",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Camellya",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Changli",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Chixia",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Ciaccona",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Danjin",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Encore",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Cantarella",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Jianxin",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Jinhsi",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Jiyan",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Lingyang",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Lumi",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Mortefi",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Phoebe",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Roccia",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Sanhua",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Shorekeeper",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Taoqi",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Verina",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Xiangli_Yao",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Yangyang",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Yinlin",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Youhu",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Yuanwu",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Zani",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Zhezhi",
-        "value1": 99,
-        "value2": "C0"
+        "rarity": 4,
+        "standart": false
+    },
+    {
+        "name": "Rover_Aero",
+        "rarity": 4,
+        "standart": false
+    },
+    {
+        "name": "Rover_Havok",
+        "rarity": 4,
+        "standart": false
+    },
+    {
+        "name": "Rover_Spectro",
+        "rarity": 4,
+        "standart": false
     }
 ]

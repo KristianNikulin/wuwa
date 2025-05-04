@@ -32,14 +32,15 @@ const Header = () => {
     };
 
     const { user, isLoading, checkAuth } = useUser();
+    const isAdmin = user?.status === "admin";
 
     const handleLogout = async () => {
         try {
             await api.post("/logout", {});
             navigate("/about");
             checkAuth();
-        } catch (error) {
-            console.log(`error: `, error);
+        } catch (e) {
+            console.warn(`error: `, e);
         }
     };
 
@@ -68,12 +69,22 @@ const Header = () => {
                                 <Trans>PARTICIPATE</Trans>
                             </button>
                         ) : (
-                            <button
-                                onClick={() => navigate(`/player/${user.username}`)}
-                                className={isActive(`/player/${user.username}`) ? styles.active : ""}
-                            >
-                                {user.display_name}
-                            </button>
+                            <>
+                                <button
+                                    onClick={() => navigate(`/player/${user.username}`)}
+                                    className={isActive(`/player/${user.username}`) ? styles.active : ""}
+                                >
+                                    {user.display_name}
+                                </button>
+                                {isAdmin && (
+                                    <button
+                                        onClick={() => navigate("/admin")}
+                                        className={isActive("/admin") ? styles.active : ""}
+                                    >
+                                        ADMIN CONSOLE
+                                    </button>
+                                )}
+                            </>
                         ))}
                 </div>
                 <div className={styles.infoContainer}>

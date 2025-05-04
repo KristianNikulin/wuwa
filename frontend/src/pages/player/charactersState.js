@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-import { getCharacters, getPlayerCharacters, addPlayerCharacters, deletePlayerCharacters } from "../../api";
+import {
+    getCharacters,
+    getPlayerCharacters,
+    addPlayerCharacters,
+    deletePlayerCharacters,
+    updatePlayerCharacters,
+} from "../../api";
 
 export const useCharactersState = (username) => {
     const [characters, setCharacters] = useState([]);
@@ -9,6 +15,15 @@ export const useCharactersState = (username) => {
     const [itemsToRemove, setItemsToRemove] = useState([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [dropdownItems, setDropdownItems] = useState([]);
+
+    const [modifiedValues, setModifiedValues] = useState({});
+
+    const handleValueChange = (name, value1, value2) => {
+        setModifiedValues((prev) => ({
+            ...prev,
+            [name]: { value1, value2 },
+        }));
+    };
 
     const loadCharacters = async () => {
         try {
@@ -59,7 +74,15 @@ export const useCharactersState = (username) => {
     const getDisplayItems = () => {
         const addedItems = itemsToAdd.map((name) => characters.find((item) => item.name === name)).filter(Boolean);
 
-        return [...playerCharacters.filter((item) => !itemsToRemove.includes(item.name)), ...addedItems];
+        const baseItems = [...playerCharacters.filter((item) => !itemsToRemove.includes(item.name)), ...addedItems];
+
+        // Применяем изменения из modifiedValues
+        return baseItems.map((item) => {
+            if (modifiedValues[item.name]) {
+                return { ...item, ...modifiedValues[item.name] };
+            }
+            return item;
+        });
     };
 
     const saveChanges = async () => {
@@ -75,11 +98,19 @@ export const useCharactersState = (username) => {
                 return { success: false, error: errors.join(", ") };
             }
 
+            if (Object.keys(modifiedValues).length > 0) {
+                const updateRes = await updatePlayerCharacters(username, modifiedValues);
+                if (!updateRes.success) {
+                    return { success: false, error: updateRes.error };
+                }
+            }
+
             const updatedRes = await getPlayerCharacters(username);
             if (updatedRes.success) {
                 setPlayerCharacters(updatedRes.data);
                 setItemsToAdd([]);
                 setItemsToRemove([]);
+                setModifiedValues({});
             }
 
             return { success: true };
@@ -96,13 +127,15 @@ export const useCharactersState = (username) => {
             dropdownOpen,
             dropdownItems,
             displayItems: getDisplayItems(),
-            hasChanges: itemsToAdd.length || itemsToRemove.length,
+            hasChanges: itemsToAdd.length || itemsToRemove.length || Object.keys(modifiedValues).length,
         },
+
         actions: {
             loadCharacters,
             toggleDropdown,
             handleAddItem,
             handleRemoveItem,
+            handleValueChange,
             saveChanges,
         },
     };

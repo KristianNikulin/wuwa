@@ -156,3 +156,25 @@ label {
 legend {
     display: block;
 }
+
+/* Общие стили для скроллбаров */
+* {
+    scrollbar-color: #333 #111; /* thumb и track */
+    scrollbar-width: thin; /* для Firefox */
+}
+
+/* WebKit-специфичные стили */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 4px;
+    border: 2px solid #111; /* чтобы выглядело встроенно */
+}

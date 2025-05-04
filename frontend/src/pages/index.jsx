@@ -17,6 +17,7 @@ import Brackets from "./bracket";
 import NotAuth from "./not-auth";
 import NotFound from "./not-found";
 import Player from "./player";
+import Admin from "./admin";
 
 const App = () => {
     return (
@@ -33,6 +34,7 @@ const App = () => {
                     <Route path="/player/:nickname" element={<Player />} />
 
                     {/* admin */}
+                    <Route path="/admin" element={<Admin />} />
 
                     <Route path="/401" element={<NotAuth />} />
                     <Route path="/404" element={<NotFound />} />

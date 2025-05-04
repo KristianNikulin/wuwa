@@ -1,282 +1,282 @@
 [
     {
         "name": "Augment",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Originite_Type_1",
-        "value1": 99,
-        "value2": "C3"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Originite_Type_2",
-        "value1": 99,
-        "value2": "C3"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Originite_Type_4",
-        "value1": 99,
-        "value2": "C3"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Amity_Accord",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Autumntra",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Cadenza",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Call_of_the_Abyss",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Celestial_Spiral",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Comet_Flare",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Commando_of_Conviction",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Discord",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Endless_Collapse",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Fables_of_Wisdom",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Fusion_Accretion",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Gauntlets_21D",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Helios_Cleaver",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Hollow_Mirage",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Jinzhou_Keeper",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Legend_of_Drunken_Hero",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Lumingloss",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Marcato",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Meditations_on_Mercy",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Oceans_Gift",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Overture",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Rectifier",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Relativistic_Jet",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Romance_in_Farewell",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Somnoire_Anchor",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Stonard",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Sword_18",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Undying_Flame",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Variation",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Waltz_in_Masquerade",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Waning_Redshift",
-        "value1": 99,
-        "value2": "C4"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Abyss_Surges",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Ages_of_Harvest",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Blazing_Brilliance",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Bloodpacts_Pledge",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Cosmic_Ripples",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Emerald_of_Genesis",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Luminous_Hymn",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Lustrous_Razor",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Red_Spring",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Rime_Draped_Sprouts",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Static_Mist",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Stellar_Symphony",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Stringmaster",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "The_Last_Dance",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Tragicomedy",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Unflickering_Valor",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Verdant_Summit",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Veritys_Handle",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Whispers_of_Sirens",
-        "value1": 99,
-        "value2": "C5"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Blazing_Justice",
-        "value1": 99,
-        "value2": "-"
+        "rarity": 4,
+        "standart": false
     },
     {
         "name": "Woodland_Aria",
-        "value1": 99,
-        "value2": "-"
+        "rarity": 4,
+        "standart": false
     }
 ]

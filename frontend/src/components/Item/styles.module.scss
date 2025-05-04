@@ -54,7 +54,13 @@
 }
 
 .valueText {
+    display: flex;
+    align-items: center;
+
+    text-shadow: none;
+
     font-family: Rubik;
+    width: 20px;
 }
 
 .trashButton {
