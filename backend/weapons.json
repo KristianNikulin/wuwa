@@ -6,17 +6,17 @@
     },
     {
         "name": "Originite_Type_1",
-        "rarity": 4,
+        "rarity": 3,
         "standart": false
     },
     {
         "name": "Originite_Type_2",
-        "rarity": 4,
+        "rarity": 3,
         "standart": false
     },
     {
         "name": "Originite_Type_4",
-        "rarity": 4,
+        "rarity": 3,
         "standart": false
     },
     {
@@ -176,107 +176,107 @@
     },
     {
         "name": "Abyss_Surges",
-        "rarity": 4,
-        "standart": false
+        "rarity": 5,
+        "standart": true
     },
     {
         "name": "Ages_of_Harvest",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Blazing_Brilliance",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Bloodpacts_Pledge",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Cosmic_Ripples",
-        "rarity": 4,
-        "standart": false
+        "rarity": 5,
+        "standart": true
     },
     {
         "name": "Emerald_of_Genesis",
-        "rarity": 4,
-        "standart": false
+        "rarity": 5,
+        "standart": true
     },
     {
         "name": "Luminous_Hymn",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Lustrous_Razor",
-        "rarity": 4,
-        "standart": false
+        "rarity": 5,
+        "standart": true
     },
     {
         "name": "Red_Spring",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Rime_Draped_Sprouts",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Static_Mist",
-        "rarity": 4,
-        "standart": false
+        "rarity": 5,
+        "standart": true
     },
     {
         "name": "Stellar_Symphony",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Stringmaster",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "The_Last_Dance",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Tragicomedy",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Unflickering_Valor",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Verdant_Summit",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Veritys_Handle",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Whispers_of_Sirens",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Blazing_Justice",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Woodland_Aria",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     }
 ]
