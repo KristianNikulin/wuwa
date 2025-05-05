@@ -1,7 +1,7 @@
 [
     {
         "name": "Carlotta",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
@@ -16,22 +16,22 @@
     },
     {
         "name": "Brant",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Calcharo",
-        "rarity": 4,
-        "standart": false
+        "rarity": 5,
+        "standart": true
     },
     {
         "name": "Camellya",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Changli",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
@@ -41,7 +41,7 @@
     },
     {
         "name": "Ciaccona",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
@@ -51,33 +51,33 @@
     },
     {
         "name": "Encore",
-        "rarity": 4,
-        "standart": false
+        "rarity": 5,
+        "standart": true
     },
     {
         "name": "Cantarella",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Jianxin",
-        "rarity": 4,
-        "standart": false
+        "rarity": 5,
+        "standart": true
     },
     {
         "name": "Jinhsi",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Jiyan",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Lingyang",
-        "rarity": 4,
-        "standart": false
+        "rarity": 5,
+        "standart": true
     },
     {
         "name": "Lumi",
@@ -91,12 +91,12 @@
     },
     {
         "name": "Phoebe",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Roccia",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
@@ -106,7 +106,7 @@
     },
     {
         "name": "Shorekeeper",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
@@ -116,12 +116,12 @@
     },
     {
         "name": "Verina",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Xiangli_Yao",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
@@ -131,7 +131,7 @@
     },
     {
         "name": "Yinlin",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
@@ -146,12 +146,12 @@
     },
     {
         "name": "Zani",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
         "name": "Zhezhi",
-        "rarity": 4,
+        "rarity": 5,
         "standart": false
     },
     {
