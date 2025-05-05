@@ -196,6 +196,19 @@ def user_weapons(player_name):
 
             weapons_list = [item["weapon_data"] for item in user_weapons]
 
+            # Получаем редкости из общей коллекции оружия
+            rarity_map = {}
+            all_weapons_data = db.weapons.find({}, {"_id": 0, "name": 1, "rarity": 1})
+            for weapon in all_weapons_data:
+                rarity_map[weapon["name"]] = weapon.get("rarity", 0)
+
+            # Добавим редкость к каждому оружию пользователя (если есть)
+            for weapon in weapons_list:
+                weapon["rarity"] = rarity_map.get(weapon["name"], 0)
+
+            # Сортируем по убыванию редкости
+            weapons_list.sort(key=lambda w: w.get("rarity", 0), reverse=True)
+
             return jsonify({"status": "success", "data": weapons_list}), 200
 
         elif request.method == "POST":
