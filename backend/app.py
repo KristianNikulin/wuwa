@@ -650,5 +650,47 @@ def change_display_name():
         return jsonify({"status": "error", "message": "Database error"}), 500
 
 
+@app.route("/tournaments", methods=["GET"])
+def get_all_tournaments():
+    try:
+        tournaments = list(tournaments_collection.find({}, {"_id": 0}))
+        return jsonify({"status": "success", "data": tournaments}), 200
+    except PyMongoError as e:
+        return jsonify({"status": "error", "message": "Database error"}), 500
+
+
+@app.route("/tournaments/active", methods=["GET"])
+def get_active_tournament():
+    try:
+        active_tournaments = list(tournaments_collection.find(
+            {"active": True},
+            {"_id": 0}
+        ))
+
+        if len(active_tournaments) == 0:
+            return jsonify({
+                "status": "error",
+                "message": "No active tournament found"
+            }), HTTPStatus.NOT_FOUND
+
+        if len(active_tournaments) > 1:
+            return jsonify({
+                "status": "error",
+                "message": "Multiple active tournaments found",
+                "count": len(active_tournaments)
+            }), HTTPStatus.CONFLICT
+
+        return jsonify({
+            "status": "success",
+            "data": active_tournaments[0]
+        }), HTTPStatus.OK
+
+    except PyMongoError as e:
+        return jsonify({
+            "status": "error",
+            "message": "Database error"
+        }), HTTPStatus.INTERNAL_SERVER_ERROR
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

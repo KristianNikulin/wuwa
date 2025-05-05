@@ -90,6 +90,10 @@ class MongoDBManager:
             "user_screenshots": [
                 ("user_id", {}),
                 ("filename", {"unique": True})
+            ],
+            "tournaments": [
+                ("tournamentName", {"unique": True}),
+                ("active", {})
             ]
         }
 
@@ -200,6 +204,9 @@ def main():
         )
         mongo_manager.initialize_collection_data(
             'characters', 'characters.json'
+        )
+        mongo_manager.initialize_collection_data(
+            'tournaments', 'tournaments.json', 'tournamentName'
         )
 
         logger.info("Database initialization completed successfully")
