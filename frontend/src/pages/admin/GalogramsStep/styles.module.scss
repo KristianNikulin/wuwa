@@ -80,3 +80,14 @@
         background: rgba(255, 255, 255, 0.3);
     }
 }
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.playersSelection {
+    display: flex;
+}

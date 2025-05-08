@@ -1,0 +1,115 @@
+.galogramsContent {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 40px;
+
+    position: relative;
+}
+
+.bans {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bansContainer {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.picks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.game {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.chars {
+    display: flex;
+    justify-content: center; // between???
+    gap: 40px;
+}
+
+.chsrsGal {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.bottom {
+    display: flex;
+    gap: 50px;
+}
+
+// ============
+
+.playerTable {
+    display: flex;
+    // justify-content: center;
+    // align-items: start;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px;
+
+    overflow-x: "auto"; // ???????????
+
+    // background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    max-width: 660px;
+    // height: 100%; // FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    padding: 10px 10px 20px;
+
+    // border: 1px solid var(--blue-color);
+    // box-shadow: var(--purple-shadow-1px);
+}
+
+.addButtonContainer {
+    position: relative;
+}
+
+.dropdownLeft {
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+
+    background-color: rgba(0, 0, 0, 1);
+
+    position: absolute;
+    right: 100%;
+    top: 0;
+    z-index: 10;
+
+    border: 1px solid var(--blue-color);
+    border-radius: 4px;
+    overflow-y: auto;
+    width: 300px;
+}
+
+.dropdownRight {
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+
+    background-color: rgba(0, 0, 0, 1);
+
+    position: absolute;
+    left: 100%;
+    top: 0;
+    z-index: 10;
+
+    border: 1px solid var(--blue-color);
+    border-radius: 4px;
+    overflow-y: auto;
+    width: 300px;
+}

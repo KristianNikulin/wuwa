@@ -1,20 +1,77 @@
 import React, { createContext, useContext, useState } from "react";
-import { useForm } from "react-hook-form";
 
-const AdminFormContext = createContext();
+const AdminContext = createContext();
 
-export const AdminFormProvider = ({ children }) => {
-    const [step, setStep] = useState(1);
-    const formMethods = useForm();
+export const AdminProvider = ({ children }) => {
+    const [adminState, setAdminState] = useState({
+        step: 1,
+        players: {
+            player1: null,
+            player2: null,
+        },
+        galograms: {
+            player1Ban: null,
+            player2Ban: null,
+            player1Choose: null,
+            player2Choose: null,
+            random: null,
+        },
+        tournament: null,
+        games: [],
+    });
+    console.log(`adminState: `, adminState);
 
-    const nextStep = () => setStep((prev) => prev + 1);
-    const prevStep = () => setStep((prev) => prev - 1);
+    const nextStep = () => setAdminState((prev) => ({ ...prev, step: prev.step + 1 }));
+    const prevStep = () => setAdminState((prev) => ({ ...prev, step: prev.step - 1 }));
+
+    const updateState = (key, value) => {
+        setAdminState((prev) => {
+            if (key.includes(".")) {
+                const [parentKey, childKey] = key.split(".");
+                return {
+                    ...prev,
+                    [parentKey]: {
+                        ...prev[parentKey],
+                        [childKey]: value,
+                    },
+                };
+            }
+            return { ...prev, [key]: value };
+        });
+    };
+
+    const resetState = () => {
+        setAdminState({
+            step: 1,
+            players: {
+                player1: null,
+                player2: null,
+            },
+            galograms: {
+                player1Ban: null,
+                player2Ban: null,
+                player1Choose: null,
+                player2Choose: null,
+                random: null,
+            },
+            tournament: null,
+            games: [],
+        });
+    };
 
     return (
-        <AdminFormContext.Provider value={{ step, nextStep, prevStep, ...formMethods }}>
-            {typeof children === "function" ? children({ step, nextStep, prevStep, ...formMethods }) : children}
-        </AdminFormContext.Provider>
+        <AdminContext.Provider
+            value={{
+                ...adminState,
+                nextStep,
+                prevStep,
+                updateState,
+                resetState,
+            }}
+        >
+            {children}
+        </AdminContext.Provider>
     );
 };
 
-export const useAdminForm = () => useContext(AdminFormContext);
+export const useAdmin = () => useContext(AdminContext);

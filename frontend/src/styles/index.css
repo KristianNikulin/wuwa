@@ -47,6 +47,8 @@
 :root {
     --blue-color: #3f20f9;
     --purple-color: #8400ff;
+    --gold-color: #dbb70d;
+    --red-color: #ff0000;
 
     --purple-shadow-1px: -1px -1px 0 #8400ff, 1px -1px 0 #8400ff, -1px 1px 0 #8400ff, 1px 1px 0 #8400ff;
     --purple-shadow-1\5px: -1.5px -1.5px 0 #8400ff, 1.5px -1.5px 0 #8400ff, -1.5px 1.5px 0 #8400ff,
@@ -56,6 +58,14 @@
     --blue-shadow-1px: -1px -1px 0 #3f20f9, 1px -1px 0 #3f20f9, -1px 1px 0 #3f20f9, 1px 1px 0 #3f20f9;
     --blue-shadow-1\5px: -1.5px -1.5px 0 #3f20f9, 1.5px -1.5px 0 #3f20f9, -1.5px 1.5px 0 #3f20f9, 1.5px 1.5px 0 #3f20f9;
     --blue-shadow-2px: -2px -2px 0 #3f20f9, 2px -2px 0 #3f20f9, -2px 2px 0 #3f20f9, 2px 2px 0 #3f20f9;
+
+    --gold-shadow-1px: -1px -1px 0 #dbb70d, 1px -1px 0 #dbb70d, -1px 1px 0 #dbb70d, 1px 1px 0 #dbb70d;
+    --gold-shadow-1\5px: -1.5px -1.5px 0 #dbb70d, 1.5px -1.5px 0 #dbb70d, -1.5px 1.5px 0 #dbb70d, 1.5px 1.5px 0 #dbb70d;
+    --gold-shadow-2px: -2px -2px 0 #dbb70d, 2px -2px 0 #dbb70d, -2px 2px 0 #dbb70d, 2px 2px 0 #dbb70d;
+
+    --red-shadow-1px: -1px -1px 0 #ff0000, 1px -1px 0 #ff0000, -1px 1px 0 #ff0000, 1px 1px 0 #ff0000;
+    --red-shadow-1\5px: -1.5px -1.5px 0 #ff0000, 1.5px -1.5px 0 #ff0000, -1.5px 1.5px 0 #ff0000, 1.5px 1.5px 0 #ff0000;
+    --red-shadow-2px: -2px -2px 0 #ff0000, 2px -2px 0 #ff0000, -2px 2px 0 #ff0000, 2px 2px 0 #ff0000;
 }
 
 *,

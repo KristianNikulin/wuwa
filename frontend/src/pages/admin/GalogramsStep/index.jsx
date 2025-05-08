@@ -1,80 +1,171 @@
 import React, { useState } from "react";
-import { useAdminForm } from "../../../state-providers/AdminContext";
-
+import { useAdmin } from "../../../state-providers/AdminContext";
 import { galogramsData } from "../../../constants/videoImports";
-
 import styles from "./styles.module.scss";
+import { useGalogramsState } from "./state";
+import PlayerSelect from "../../../components/PlayerSelect";
 
 export const GalogramsStep = () => {
-    const { nextStep } = useAdminForm();
+    const {
+        nextStep,
+        players: { player1, player2 },
+        galograms: { player1Ban, player2Ban, player1Choose, player2Choose, random },
+        updateState,
+        resetState,
+    } = useAdmin();
 
-    const [bannedGalograms, setBannedGalograms] = useState([]);
-    const [choosedGalograms, setChoosedGalograms] = useState([]);
+    const { players } = useGalogramsState();
     const [clickCount, setClickCount] = useState(0);
+    const [lastSelectedId, setLastSelectedId] = useState(null);
+
+    const filteredFirstPlayers = players.filter((p) => !player2 || p.username !== player2.username);
+    const filteredSecondPlayers = players.filter((p) => !player1 || p.username !== player1.username);
+
+    const handleFirstPlayerSelect = (player) => {
+        updateState("players.player1", player);
+    };
+
+    const handleSecondPlayerSelect = (player) => {
+        updateState("players.player2", player);
+    };
 
     const handleVideoClick = (videoId) => {
-        const isChoosed = choosedGalograms.includes(videoId) || bannedGalograms.includes(videoId);
-        const newClickCount = clickCount + 1;
-        if (!isChoosed && newClickCount <= 4) {
-            setClickCount(newClickCount);
-            if (newClickCount <= 2) {
-                setBannedGalograms((prev) => [...prev, videoId]);
-            } else {
-                setChoosedGalograms((prev) => [...prev, videoId]);
+        if (random) return;
+
+        if (videoId === lastSelectedId) {
+            switch (clickCount) {
+                case 1:
+                    updateState("galograms.player1Ban", null);
+                    setClickCount(0);
+                    setLastSelectedId(null);
+                    break;
+                case 2:
+                    updateState("galograms.player2Ban", null);
+                    setClickCount(1);
+                    setLastSelectedId(player1Ban);
+                    break;
+                case 3:
+                    updateState("galograms.player1Choose", null);
+                    setClickCount(2);
+                    setLastSelectedId(player2Ban);
+                    break;
+                case 4:
+                    updateState("galograms.player2Choose", null);
+                    setClickCount(3);
+                    setLastSelectedId(player1Choose);
+                    break;
+                default:
+                    break;
             }
+            return;
+        }
+
+        switch (clickCount) {
+            case 0:
+                updateState("galograms.player1Ban", videoId);
+                setClickCount(1);
+                setLastSelectedId(videoId);
+                break;
+            case 1:
+                updateState("galograms.player2Ban", videoId);
+                setClickCount(2);
+                setLastSelectedId(videoId);
+                break;
+            case 2:
+                updateState("galograms.player1Choose", videoId);
+                setClickCount(3);
+                setLastSelectedId(videoId);
+                break;
+            case 3:
+                updateState("galograms.player2Choose", videoId);
+                setClickCount(4);
+                setLastSelectedId(videoId);
+                break;
+            default:
+                break;
         }
     };
 
     const handleRandomSelect = () => {
-        const available = galogramsData.filter(
-            (g) => !(choosedGalograms.includes(g.id) || bannedGalograms.includes(g.id))
-        );
-        const randomIndex = Math.floor(Math.random() * available.length);
-        const randomId = available[randomIndex]?.id;
+        if (clickCount < 4) return;
 
-        if (clickCount == 4) {
-            setClickCount((click) => click + 1);
-            setChoosedGalograms((prev) => [...prev, randomId]);
+        const selected = [player1Ban, player2Ban, player1Choose, player2Choose].filter(Boolean);
+
+        const available = galogramsData.filter((g) => !selected.includes(g.id));
+
+        if (available.length > 0) {
+            const randomIndex = Math.floor(Math.random() * available.length);
+            const randomId = available[randomIndex]?.id;
+            updateState("galograms.random", randomId);
+            setLastSelectedId(randomId);
         }
     };
 
     const handleReset = () => {
-        setChoosedGalograms([]);
-        setBannedGalograms([]);
+        resetState();
         setClickCount(0);
+        setLastSelectedId(null);
+    };
+
+    const getSelectionType = (id) => {
+        if (id === player1Ban || id === player2Ban) return "banned";
+        if (id === player1Choose || id === player2Choose || id === random) return "choosed";
+        return null;
     };
 
     return (
         <div className={styles.galogramsContent}>
             <div className={styles.videoContent}>
                 {galogramsData.map(({ id, video, element }) => {
-                    const isChoosedSelected = choosedGalograms.includes(id);
-                    const isBannedSelected = bannedGalograms.includes(id);
+                    const selectionType = getSelectionType(id);
 
                     return (
                         <div
                             key={id}
-                            className={`${styles.videoContainer} ${isChoosedSelected ? styles.choosedSelected : ""} ${
-                                isBannedSelected ? styles.bannedSelected : ""
-                            }`}
+                            className={`${styles.videoContainer} ${
+                                selectionType === "choosed" ? styles.choosedSelected : ""
+                            } ${selectionType === "banned" ? styles.bannedSelected : ""}`}
                             onClick={() => handleVideoClick(id)}
                         >
-                            <video src={video} autoPlay={!isBannedSelected} loop muted />
+                            <video src={video} autoPlay={selectionType !== "banned"} loop muted />
                             <img className={styles.element} src={element} alt="" />
                         </div>
                     );
                 })}
             </div>
 
-            <div>
-                <button type="button" className={styles.actionButton} onClick={handleRandomSelect}>
+            <div className={styles.buttonsContainer}>
+                <div className={styles.playersSelection}>
+                    <PlayerSelect
+                        options={filteredFirstPlayers}
+                        value={players}
+                        onChange={handleFirstPlayerSelect}
+                        placeholder="Search Player 1"
+                    />
+                    <PlayerSelect
+                        options={filteredSecondPlayers}
+                        value={players}
+                        onChange={handleSecondPlayerSelect}
+                        placeholder="Search Player 2"
+                    />
+                </div>
+                <div>bans</div>
+                <div>
+                    <button type="button" className={styles.nextButton} onClick={nextStep}>
+                        Next
+                    </button>
+                </div>
+                <button
+                    type="button"
+                    className={styles.actionButton}
+                    onClick={handleRandomSelect}
+                    disabled={clickCount < 4 || !!random}
+                >
                     Random Select
                 </button>
+
                 <button type="button" className={styles.actionButton} onClick={handleReset}>
-                    Reset
-                </button>
-                <button type="button" className={styles.nextButton} onClick={nextStep}>
-                    Next
+                    Reset All
                 </button>
             </div>
         </div>

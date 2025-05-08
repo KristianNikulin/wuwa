@@ -42,6 +42,22 @@ export async function getPlayer(playerName) {
     }
 }
 
+export async function getPlayers() {
+    try {
+        const response = await api.get("/players");
+        return {
+            success: true,
+            data: response.data.data,
+        };
+    } catch (error) {
+        console.error("Get players error:", error.response?.data || error.message);
+        return {
+            success: false,
+            error: error.response?.data?.message || "Failed to load players list",
+        };
+    }
+}
+
 export async function getCharacters() {
     try {
         const response = await api.get("/characters");
@@ -284,6 +300,47 @@ export async function updateDisplayName(displayName) {
         return {
             success: false,
             error: error.response?.data?.message || `Failed to change player display name`,
+        };
+    }
+}
+
+export async function getAllTournaments() {
+    try {
+        const response = await api.get("/tournaments");
+        return {
+            success: true,
+            data: response.data.data,
+        };
+    } catch (error) {
+        console.error("Get all tournaments error:", error.response?.data || error.message);
+        return {
+            success: false,
+            error: error.response?.data?.message || "Failed to load tournaments",
+        };
+    }
+}
+
+export async function getActiveTournament() {
+    try {
+        const response = await api.get("/tournaments/active");
+        return {
+            success: true,
+            data: response.data.data,
+        };
+    } catch (error) {
+        console.error("Get active tournament error:", error.response?.data || error.message);
+
+        if (error.response?.status === 409) {
+            return {
+                success: false,
+                error: "Multiple active tournaments detected. Please contact administrator.",
+                details: error.response.data,
+            };
+        }
+
+        return {
+            success: false,
+            error: error.response?.data?.message || "Failed to load active tournament",
         };
     }
 }

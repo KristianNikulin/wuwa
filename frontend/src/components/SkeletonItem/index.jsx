@@ -8,8 +8,8 @@ const SkeletonItem = (props) => (
     <ContentLoader
         // className={styles.skeletonItem}
         speed={2}
-        width={100}
-        height={100}
+        width={80}
+        height={80}
         viewBox="0 0 200 200"
         backgroundColor="#2a2a2a"
         foregroundColor="#3a3a3a"

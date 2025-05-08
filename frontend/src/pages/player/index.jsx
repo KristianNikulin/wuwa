@@ -338,6 +338,7 @@ const Player = () => {
                                                     key={`${item.name}${i}`}
                                                     type="weapon"
                                                     name={item.name}
+                                                    rarity={item.rarity}
                                                     showTrash={false}
                                                     onAddClick={() => weaponsActions.handleAddItem(item)}
                                                     style={{ cursor: "pointer" }}
@@ -360,6 +361,7 @@ const Player = () => {
                                           name={weapon.name}
                                           value1={weapon.value1}
                                           value2={weapon.value2}
+                                          rarity={weapon.rarity}
                                           onRemoveClick={() => weaponsActions.handleRemoveItem(weapon.name)}
                                           onValueChange={weaponsActions.handleValueChange}
                                       />

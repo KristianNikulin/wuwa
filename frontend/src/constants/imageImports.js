@@ -92,6 +92,23 @@ import Rover_Aero from "../images/characters/Rover_Aero.png";
 import Rover_Havok from "../images/characters/Rover_Havok.png";
 import Rover_Spectro from "../images/characters/Rover_Spectro.png";
 
+// galograms
+import gekata from "../images/galograms/gekata.png";
+import constrykt from "../images/galograms/constrykt.png";
+import dracon from "../images/galograms/dracon.png";
+import jojo from "../images/galograms/jojo.png";
+import mokaka from "../images/galograms/mokaka.png";
+import tempest from "../images/galograms/tempest.png";
+
+export const galogramsImages = {
+    gekata,
+    constrykt,
+    dracon,
+    jojo,
+    mokaka,
+    tempest,
+};
+
 export const characterImages = {
     Carlotta,
     Aalto,

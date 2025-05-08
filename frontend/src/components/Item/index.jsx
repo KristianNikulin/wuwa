@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import { characterImages, weaponImages } from "../../constants/imageImports";
+import { characterImages, galogramsImages, weaponImages } from "../../constants/imageImports";
 
+import { getRarityStyle } from "./utils";
 import { FiTrash2 } from "react-icons/fi";
 
 import styles from "./styles.module.scss";
@@ -11,6 +12,7 @@ const Item = ({
     name = "",
     value1,
     value2,
+    rarity = 4,
     disabled = false,
     isAddButton = false,
     showTrash = true,
@@ -74,6 +76,7 @@ const Item = ({
                 let image;
                 if (type === "weapon") image = weaponImages[name];
                 if (type === "character") image = characterImages[name];
+                if (type === "galogram") image = galogramsImages[name];
                 setImageSrc(image);
             } catch (e) {
                 console.warn(`error: `, e);
@@ -84,20 +87,27 @@ const Item = ({
 
     const prefix = type === "weapon" ? "R" : "C";
 
+    const rarityStyle = getRarityStyle(rarity);
+
     return (
         <>
             {isAddButton ? (
                 <div className={styles.addItemContainer}>
-                    <button disabled={disabled} onClick={onAddClick} className={styles.addItem}>
+                    <button disabled={disabled} onClick={onAddClick} className={styles.addItem} style={rarityStyle}>
                         +
                     </button>
                 </div>
             ) : (
                 <div onClick={onAddClick} className={styles.itemContainer} {...props}>
-                    <img className={styles.itemImage} src={imageSrc} alt="" />
+                    <img
+                        className={styles.itemImage}
+                        style={{ filter: disabled ? "brightness(0.5)" : "none", ...rarityStyle }}
+                        src={imageSrc}
+                        alt=""
+                    />{" "}
                     {showStats &&
                         (canEdit ? (
-                            <div className={styles.valueContainer}>
+                            <div className={styles.valueContainer} style={rarityStyle}>
                                 <input
                                     className={styles.valueText}
                                     value={localValue1 === "" ? "" : localValue1}
@@ -121,7 +131,7 @@ const Item = ({
                                 </span>
                             </div>
                         ) : (
-                            <div className={styles.valueContainer}>
+                            <div className={styles.valueContainer} style={rarityStyle}>
                                 <span className={styles.valueText}>{value1}</span> |{" "}
                                 <span className={styles.valueText}>
                                     {prefix}
