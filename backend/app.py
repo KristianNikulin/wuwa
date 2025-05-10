@@ -10,6 +10,7 @@ from flask_limiter.util import get_remote_address
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 from bson.objectid import ObjectId
+from collections import defaultdict
 
 app = Flask(__name__)
 
@@ -60,6 +61,54 @@ def allowed_file(filename):
 
 
 # API Endpoints
+@app.route('/api/banned-characters', methods=['POST'])
+def get_banned_characters():
+    data = request.json
+    user1_id = data.get('user1_id')
+    user2_id = data.get('user2_id')
+
+    if not user1_id or not user2_id:
+        return jsonify({'error': 'user1_id and user2_id are required'}), 400
+
+    try:
+        # Получаем всех персонажей обоих юзеров с rarity = 5
+        user_chars = db.user_characters.find({
+            'user_id': {'$in': [user1_id, user2_id]},
+            'character_data.rarity': 5
+        })
+
+        # Группируем по character_id
+        from collections import defaultdict
+        grouped = defaultdict(dict)
+        for item in user_chars:
+            uid = item['user_id']
+            cid = item['character_id']
+            val2 = item['character_data'].get('value2', 0)
+            grouped[cid][uid] = val2
+
+        # Проверка на бан
+        banned = []
+        for cid, users in grouped.items():
+            u1_has = user1_id in users
+            u2_has = user2_id in users
+
+            if not u1_has or not u2_has:
+                banned.append(cid)
+                continue
+
+            val1 = users[user1_id]
+            val2 = users[user2_id]
+
+            # бан, если у кого-то > 2
+            if val1 > 2 or val2 > 2:
+                banned.append(cid)
+            # бан, если один <=2, другой >2 — уже учтено выше
+            # ничего не делаем, если оба <= 2
+
+        return jsonify({'banned_characters': banned})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route("/login", methods=["POST"])
